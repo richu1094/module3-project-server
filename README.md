@@ -1,6 +1,8 @@
 # module2-project
 
-APP routes
+## PAYING routes
+
+Base URL: `/api/pay` 
 
 | METHOD | PATH                    | DESCRIPTION                                 | ESTADO |
 |--------|-------------------------|---------------------------------------------|--------|
