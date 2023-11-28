@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { response } = require("express");
 const Project = require("../models/Project.model");
 
 router.get('/', (req, res) => {
