@@ -6,9 +6,9 @@ const CategorySchema = new Schema(
       type: String,
       minlength: [10, 'Title must have at least 10 characters'],
     },
-    descriptions: {
+    description: {
       type: String,
-      minlength: [100, 'Description must have at least 100 characters']
+      minlength: [10, 'Description must have at least 10 characters']
     }
   },
   {

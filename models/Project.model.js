@@ -21,10 +21,10 @@ const ProjectSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    // category: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'Category'
-    // },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category'
+    },
     endDate: {
       type: Date,
     },
