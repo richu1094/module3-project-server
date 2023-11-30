@@ -8,6 +8,9 @@ module.exports = app => {
     const categoryRoutes = require("./category.routes.js")
     app.use("/api/category", categoryRoutes);
 
+    const planRoutes = require("./plan.routes.js")
+    app.use("/api/plan", planRoutes);
+
     const authRoutes = require("./auth.routes.js");
     app.use("/api/auth", authRoutes);
 }

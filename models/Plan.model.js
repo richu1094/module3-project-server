@@ -8,6 +8,9 @@ const PlanSchema = new Schema(
     description: {
       type: String,
     },
+    image: {
+      type: String,
+    },
     content: {
       type: String,
     },
@@ -18,6 +21,10 @@ const PlanSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Project'
     },
+    isRecommended: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true

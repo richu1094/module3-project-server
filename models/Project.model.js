@@ -13,10 +13,6 @@ const ProjectSchema = new Schema(
     image: {
       type: String,
     },
-    plans: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Plan'
-    }],
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'User'
@@ -41,7 +37,15 @@ const ProjectSchema = new Schema(
     supporters: [{
       type: Schema.Types.ObjectId,
       ref: 'User'
-    }]
+    }],
+    followers: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }],
+    isFeatured: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true

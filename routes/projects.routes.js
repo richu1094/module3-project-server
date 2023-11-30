@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Project = require("../models/Project.model");
+const { verifyToken } = require("../middlewares/verifyToken")
 
 router.get('/', (req, res) => {
     Project
@@ -9,8 +10,17 @@ router.get('/', (req, res) => {
         .catch(err => next(err))
 })
 
-router.post('/', (req, res, next) => {
-    const { title, description, image, owner, category, endDate, goal } = req.body
+router.get('/featured', (req, res) => {
+    Project
+        .find({ isFeatured: true })
+        .populate('owner')
+        .then(response => res.status(200).json(response))
+        .catch(err => next(err))
+})
+
+router.post('/', verifyToken, (req, res, next) => {
+    const { title, description, image, category, endDate, goal, isFeatured } = req.body
+    const { _id: owner } = req.payload
 
     //Falta goal y fecha por añadir
     if (!title || !description) {
@@ -21,7 +31,7 @@ router.post('/', (req, res, next) => {
     }
 
     Project
-        .create({ title, description, image, owner, category, endDate, goal })
+        .create({ title, description, image, owner, category, endDate, goal, isFeatured })
         .then(response => res.status(201).json(response))
         .catch(err => next(err))
 })
