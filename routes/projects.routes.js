@@ -28,6 +28,15 @@ router.post('/', verifyToken, (req, res, next) => {
         .catch(err => next(err))
 })
 
+router.post('/:id/delete', (req, res, next) => {
+    const { id } = req.params
+
+    Project
+        .findByIdAndDelete(id)
+        .then(response => res.status(200).json(response))
+        .catch(err => next(err))
+});
+
 router.get('/:id', (req, res, next) => {
     const { id } = req.params
 
@@ -44,19 +53,10 @@ router.post('/:id', (req, res, next) => {
     const { title, description, image, category, endDate, goal, isFeatured } = req.body
 
     Project
-        .findByIdAndUpdate(id, { title, description, image, owner, category, endDate, balance: { goal }, isFeatured }, { new: true })
+        .findByIdAndUpdate(id, { title, description, image, category, endDate, balance: { goal }, isFeatured }, { new: true })
         .then(response => res.status(200).json(response))
         .catch(err => next(err))
 
-});
-
-router.post('/:id', (req, res, next) => {
-    const { id } = req.params
-
-    Project
-        .findByIdAndDelete(id)
-        .then(response => res.status(200).json(response))
-        .catch(err => next(err))
 });
 
 module.exports = router;

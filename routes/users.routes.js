@@ -44,9 +44,9 @@ router.post("/:id/delete", (req, res, next) => {
 
 router.post("/:id/edit", (req, res, next) => {
     const { id } = req.params;
-    const { username, email, password, balance, avatar } = req.body;
+    const { username, email, role, balance, avatar } = req.body;
     User
-        .findByIdAndUpdate(id, { username, email, password, balance, avatar }, { new: true })
+        .findByIdAndUpdate(id, { username, email, role, balance, avatar }, { new: true })
         .then(response => res.status(200).json(response))
         .catch(err => next(err))
 })
