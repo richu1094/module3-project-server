@@ -34,7 +34,8 @@ router.get('/filter/:id', (req, res) => {
     Plan
         .find({ project: id })
         .populate('project')
-        .then(response => res.status(200).json(response)).catch(err => next(err))
+        .then(response => res.status(200).json(response))
+        .catch(err => next(err))
 })
 
 router.post('/:id/delete', (req, res) => {

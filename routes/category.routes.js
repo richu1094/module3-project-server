@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { response } = require("express");
 const Category = require("../models/Category.model");
 
 router.get('/', (req, res, next) => {
@@ -17,10 +18,20 @@ router.post('/create', (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.post('/:id/delete', (req, res) => {
+router.post('/:id/delete', (req, res, next) => {
     const { id } = req.params
     Category
         .findByIdAndDelete(id)
+        .then(response => res.status(200).json(response))
+        .catch(err => next(err))
+})
+
+router.post("/:id/edit", (req, res, next) => {
+    const { id } = req.params
+    const { title, description } = req.body
+
+    Category
+        .findByIdAndUpdate(id, { title, description })
         .then(response => res.status(200).json(response))
         .catch(err => next(err))
 })

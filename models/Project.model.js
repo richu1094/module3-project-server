@@ -12,14 +12,17 @@ const ProjectSchema = new Schema(
     },
     image: {
       type: String,
+      required: [true, 'Image is required'],
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: [true, 'Owner is required'],
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: 'Category'
+      ref: 'Category',
+      required: [true, 'Category is required'],
     },
     endDate: {
       type: Date,
@@ -27,7 +30,7 @@ const ProjectSchema = new Schema(
     balance: {
       goal: {
         type: Number,
-        // required: [true, 'Goal is required'],
+        required: [true, 'Goal is required'],
       },
       current: {
         type: Number,
