@@ -1,12 +1,11 @@
 module.exports = (app) => {
   app.use((req, res, next) => {
-    res.status(404).json({ message: "This route does not exist" });
-  });
+    res.status(404).json({ message: 'This route does not exist' })
+  })
 
   app.use((err, req, res, next) => {
-
     if (err.name === 'ValidationError') {
-      let errorMessages = Object.values(err.errors).map(el => el.message)
+      const errorMessages = Object.values(err.errors).map(el => el.message)
       res.status(400).json({ errorMessages })
     }
 
@@ -17,6 +16,5 @@ module.exports = (app) => {
     if (!res.headersSent) {
       res.status(500).json({ errorMessages: ['Se ha producido un error en servidor.'] })
     }
-
-  });
-};
+  })
+}

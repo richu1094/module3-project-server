@@ -1,25 +1,25 @@
-const { Schema, model } = require("mongoose")
+const { Schema, model } = require('mongoose')
 
 const PlanSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, 'Title is required'],
+      required: [true, 'Title is required']
     },
     description: {
       type: String,
-      required: [true, 'Description is required'],
+      required: [true, 'Description is required']
     },
     image: {
-      type: String,
+      type: String
     },
     content: {
       type: String,
-      required: [true, 'Content is required'],
+      required: [true, 'Content is required']
     },
     price: {
       type: Number,
-      required: [true, 'Price is required'],
+      required: [true, 'Price is required']
     },
     project: {
       type: Schema.Types.ObjectId,
@@ -33,7 +33,7 @@ const PlanSchema = new Schema(
   {
     timestamps: true
   }
-);
+)
 
-const Plan = model('Plan', PlanSchema);
-module.exports = Plan;
+const Plan = model('Plan', PlanSchema)
+module.exports = Plan
