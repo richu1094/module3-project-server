@@ -38,8 +38,18 @@ const ProjectSchema = new Schema(
       }
     },
     supporters: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User'
+      project: {
+        type: Schema.Types.ObjectId,
+        ref: 'Project',
+      },
+      amount: {
+        type: Number,
+        default: 0
+      },
+      donatedAt: {
+        type: Date,
+        default: Date.now
+      }
     }],
     followers: [{
       type: Schema.Types.ObjectId,

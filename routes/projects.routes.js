@@ -28,11 +28,50 @@ router.post('/', verifyToken, (req, res, next) => {
     .catch(err => next(err))
 })
 
+router.post('/:id/follow', verifyToken, (req, res, next) => {
+  const { id } = req.params
+  const { _id } = req.payload
+
+  Project
+    .findByIdAndUpdate(id, { $addToSet: { followers: _id } }, { new: true })
+    .then(response => res.status(200).json(response))
+    .catch(err => next(err))
+})
+
+router.post('/:id/unfollow', verifyToken, (req, res, next) => {
+  const { id } = req.params
+  const { _id } = req.payload
+
+  Project
+    .findByIdAndUpdate(id, { $pull: { followers: _id } }, { new: true })
+    .then(response => res.status(200).json(response))
+    .catch(err => next(err))
+})
+
 router.post('/:id/delete', (req, res, next) => {
   const { id } = req.params
 
   Project
     .findByIdAndDelete(id)
+    .then(response => res.status(200).json(response))
+    .catch(err => next(err))
+})
+
+router.post('/:id/support/:amount', verifyToken, (req, res, next) => {
+  const { id, amount } = req.params
+  const { _id } = req.payload
+
+  Project
+    .findByIdAndUpdate(id, { $push: { supporters: { user: _id, amount } } }, { new: true })
+    .then(response => res.status(200).json(response))
+    .catch(err => next(err))
+})
+
+router.post('/:id/addbalance/:amount', verifyToken, (req, res, next) => {
+  const { id, amount } = req.params
+
+  Project
+    .findByIdAndUpdate(id, { $inc: { 'balance.current': amount } }, { new: true })
     .then(response => res.status(200).json(response))
     .catch(err => next(err))
 })

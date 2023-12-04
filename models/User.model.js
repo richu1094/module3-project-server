@@ -34,13 +34,29 @@ const userSchema = new Schema(
       default: 'USER'
     },
     supported: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Project'
+      project: {
+        type: Schema.Types.ObjectId,
+        ref: 'Project',
+      },
+      amount: {
+        type: Number,
+        default: 0
+      },
+      donatedAt: {
+        type: Date,
+        default: Date.now
+      }
     }],
-    following: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Project'
-    }]
+    following: [
+      {
+        project: {
+          type: Schema.Types.ObjectId,
+          ref: 'Project',
+        }, followingAt: {
+          type: Date,
+          default: Date.now
+        }
+      }]
   },
   {
     timestamps: true
