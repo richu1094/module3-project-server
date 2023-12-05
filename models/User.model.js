@@ -36,7 +36,7 @@ const userSchema = new Schema(
     supported: [{
       project: {
         type: Schema.Types.ObjectId,
-        ref: 'Project',
+        ref: 'Project'
       },
       amount: {
         type: Number,
@@ -51,18 +51,19 @@ const userSchema = new Schema(
       {
         project: {
           type: Schema.Types.ObjectId,
-          ref: 'Project',
-        }, followingAt: {
+          ref: 'Project'
+        },
+        followingAt: {
           type: Date,
           default: Date.now
         }
       }],
     description: {
-      type: String,
+      type: String
     },
     location: {
-      type: String,
-    },
+      type: String
+    }
   },
   {
     timestamps: true

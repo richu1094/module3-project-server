@@ -44,29 +44,29 @@ router.post('/:id/delete', (req, res, next) => {
 
 router.post('/:id/edit', (req, res, next) => {
   const { id } = req.params
-  const { username, email, role, balance, avatar, description } = req.body
+  const { username, email, role, balance, avatar, description, location } = req.body
   User
-    .findByIdAndUpdate(id, { username, email, role, balance, avatar, description }, { new: true })
+    .findByIdAndUpdate(id, { username, email, role, balance, avatar, description, location }, { new: true })
     .then(response => res.status(200).json(response))
     .catch(err => next(err))
 })
 
-router.post("/:id/follow", verifyToken, (req, res, next) => {
+router.post('/:id/follow', verifyToken, (req, res, next) => {
   const { id } = req.params
   const { _id } = req.payload
 
   User
     .findById(_id)
     .then(user => {
-      const isFollowing = user.following.some(item => item.project.equals(id));
-      !isFollowing && user.following.push({ project: id });
-      return user.save();
+      const isFollowing = user.following.some(item => item.project.equals(id))
+      !isFollowing && user.following.push({ project: id })
+      return user.save()
     })
     .then(response => res.status(200).json(response))
-    .catch(err => next(err));
+    .catch(err => next(err))
 })
 
-router.post("/:id/unfollow", verifyToken, (req, res, next) => {
+router.post('/:id/unfollow', verifyToken, (req, res, next) => {
   const { id } = req.params
   const { _id } = req.payload
 
@@ -76,7 +76,7 @@ router.post("/:id/unfollow", verifyToken, (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.post("/:id/support/:amount", verifyToken, (req, res, next) => {
+router.post('/:id/support/:amount', verifyToken, (req, res, next) => {
   const { id, amount } = req.params
   const { _id } = req.payload
 
@@ -106,19 +106,17 @@ router.get('/:id', (req, res, next) => {
       populate: {
         path: 'category',
         model: 'Category'
-      },
+      }
     })
     .populate({
       path: 'following.project',
       populate: {
         path: 'category',
         model: 'Category'
-      },
+      }
     })
     .then(response => res.status(200).json(response))
     .catch(err => next(err))
 })
-
-
 
 module.exports = router

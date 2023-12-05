@@ -44,7 +44,7 @@ const ProjectSchema = new Schema(
     supporters: [{
       project: {
         type: Schema.Types.ObjectId,
-        ref: 'Project',
+        ref: 'Project'
       },
       amount: {
         type: Number,
