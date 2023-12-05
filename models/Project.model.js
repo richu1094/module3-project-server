@@ -4,11 +4,15 @@ const ProjectSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, 'Title is required']
+      required: [true, 'Title is required'],
+      minlength: [3, 'Title must have at least 3 characters'],
+      maxlength: [50, 'Title must have at most 50 characters']
     },
     description: {
       type: String,
-      required: [true, 'Description is required']
+      required: [true, 'Description is required'],
+      minlength: [10, 'Description must have at least 10 characters'],
+      maxlength: [200, 'Description must have at most 200 characters']
     },
     image: {
       type: String,

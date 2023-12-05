@@ -56,7 +56,13 @@ const userSchema = new Schema(
           type: Date,
           default: Date.now
         }
-      }]
+      }],
+    description: {
+      type: String,
+    },
+    location: {
+      type: String,
+    },
   },
   {
     timestamps: true

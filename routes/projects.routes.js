@@ -18,6 +18,17 @@ router.get('/featured', (req, res, next) => {
     .catch(err => next(err))
 })
 
+router.get("/search", (req, res, next) => {
+  console.log(req.query)
+  const { title } = req.query
+
+  Project
+    .find({ title: { $regex: title, $options: "i" } })
+    .limit(5)
+    .then(response => res.status(200).json(response))
+    .catch(err => next(err))
+})
+
 router.post('/', verifyToken, (req, res, next) => {
   const { title, description, image, category, endDate, goal, isFeatured } = req.body
   const { _id: owner } = req.payload
