@@ -2,6 +2,11 @@ const router = require('express').Router()
 const Project = require('../models/Project.model')
 const { verifyToken } = require('../middlewares/verifyToken')
 
+// TODO:^REVSIAR OPORTUNIDADES DE SELECT Y SORT
+// TODO:^DIFERENCIAR IDS EN ENDPOINTS
+// TODO: MODIFICAR RUTAS PARA ABARCAR PUT Y DELETE
+// TODO:^ REVISAR ENDOPIONTS RESOLUBLES CON SENDSTATUS
+
 router.get('/', (req, res, next) => {
   Project
     .find({})
@@ -19,7 +24,7 @@ router.get('/featured', (req, res, next) => {
 })
 
 router.get('/search', (req, res, next) => {
-  console.log(req.query)
+
   const { title } = req.query
 
   Project
@@ -40,12 +45,12 @@ router.post('/', verifyToken, (req, res, next) => {
 })
 
 router.post('/:id/follow', verifyToken, (req, res, next) => {
-  const { id } = req.params
-  const { _id } = req.payload
+  const { id: projectId } = req.params
+  const { _id: userId } = req.payload
 
   Project
-    .findByIdAndUpdate(id, { $addToSet: { followers: _id } }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(projectId, { $addToSet: { followers: userId } })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 
@@ -54,8 +59,8 @@ router.post('/:id/unfollow', verifyToken, (req, res, next) => {
   const { _id } = req.payload
 
   Project
-    .findByIdAndUpdate(id, { $pull: { followers: _id } }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(id, { $pull: { followers: _id } })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 
@@ -73,8 +78,8 @@ router.post('/:id/support/:amount', verifyToken, (req, res, next) => {
   const { _id } = req.payload
 
   Project
-    .findByIdAndUpdate(id, { $push: { supporters: { user: _id, amount } } }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(id, { $push: { supporters: { user: _id, amount } } })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 
@@ -82,8 +87,8 @@ router.post('/:id/addbalance/:amount', verifyToken, (req, res, next) => {
   const { id, amount } = req.params
 
   Project
-    .findByIdAndUpdate(id, { $inc: { 'balance.current': amount } }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(id, { $inc: { 'balance.current': amount } })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 
@@ -93,17 +98,18 @@ router.get('/:id', (req, res, next) => {
   Project
     .findById(id)
     .populate('owner')
+    .populate('followers')
     .then(response => res.status(200).json(response))
     .catch(err => next(err))
 })
 
 router.post('/:id', (req, res, next) => {
   const { id } = req.params
-  const { title, description, image, category, endDate, goal, isFeatured } = req.body
+  const { title, description, image, category, endDate, goal, current, isFeatured } = req.body
 
   Project
-    .findByIdAndUpdate(id, { title, description, image, category, endDate, balance: { goal }, isFeatured }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(id, { title, description, image, category, endDate, balance: { goal, current }, isFeatured })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 

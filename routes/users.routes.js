@@ -21,7 +21,7 @@ router.get('/getbalance', verifyToken, (req, res, next) => {
   const { _id } = req.payload
   User
     .findById(_id)
-    .then(response => res.status(200).json(response.balance))
+    .then(({ balance }) => res.status(200).json(balance))
     .catch(err => next(err))
 })
 
@@ -46,8 +46,8 @@ router.post('/:id/edit', (req, res, next) => {
   const { id } = req.params
   const { username, email, role, balance, avatar, description, location } = req.body
   User
-    .findByIdAndUpdate(id, { username, email, role, balance, avatar, description, location }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(id, { username, email, role, balance, avatar, description, location })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 
@@ -71,8 +71,8 @@ router.post('/:id/unfollow', verifyToken, (req, res, next) => {
   const { _id } = req.payload
 
   User
-    .findByIdAndUpdate(_id, { $pull: { following: { project: id } } }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(_id, { $pull: { following: { project: id } } })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 
@@ -81,8 +81,8 @@ router.post('/:id/support/:amount', verifyToken, (req, res, next) => {
   const { _id } = req.payload
 
   User
-    .findByIdAndUpdate(_id, { $push: { supported: { project: id, amount } } }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(_id, { $push: { supported: { project: id, amount } } })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 
@@ -91,8 +91,8 @@ router.post('/withdraw/:amount', verifyToken, (req, res, next) => {
   const { _id } = req.payload
 
   User
-    .findByIdAndUpdate(_id, { $inc: { balance: -amount } }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(_id, { $inc: { balance: -amount } })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 
@@ -100,7 +100,6 @@ router.get('/:id', (req, res, next) => {
   const { id } = req.params
   User
     .findById(id)
-    // .populate('supported.project')
     .populate({
       path: 'supported.project',
       populate: {

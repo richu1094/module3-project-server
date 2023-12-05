@@ -43,8 +43,8 @@ router.post('/:id/edit', (req, res, next) => {
   const { title, description, image, content, price, isRecommended } = req.body
 
   Plan
-    .findByIdAndUpdate(id, { title, description, image, content, price, isRecommended }, { new: true })
-    .then(response => res.status(200).json(response))
+    .findByIdAndUpdate(id, { title, description, image, content, price, isRecommended })
+    .then(() => res.sendStatus(203))
     .catch(err => next(err))
 })
 

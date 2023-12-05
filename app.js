@@ -4,6 +4,9 @@ require('./db')
 const express = require('express')
 const app = express()
 
+
+// TODO: DESACOPLAR CONTROLADORES
+
 require('./config')(app)
 
 require('./routes')(app)
