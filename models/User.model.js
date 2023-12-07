@@ -22,7 +22,7 @@ const userSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: 'https://res.cloudinary.com/db6gxc2n0/image/upload/v1701567818/c1lv68pjmmz5rl2ssg6z.png'
+      default: 'https://res.cloudinary.com/db6gxc2n0/image/upload/v1701465381/ifhpblqmxlbi2ir0jw5u.png'
     },
     balance: {
       type: Number,
