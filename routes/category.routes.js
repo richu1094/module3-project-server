@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Category = require('../models/Category.model')
+const Project = require('../models/Project.model')
 
 router.get('/', (req, res, next) => {
   Category
@@ -19,9 +20,10 @@ router.post('/create', (req, res, next) => {
 
 router.post('/:id/delete', (req, res, next) => {
   const { id } = req.params
-  Category
-    .findByIdAndDelete(id)
-    .then(response => res.status(200).json(response))
+
+  Project.updateMany({ category: id }, { category: "6571999c4c094f8b72687986" })
+    .then(() => Category.findByIdAndDelete(id))
+    .then(() => res.sendStatus(200))
     .catch(err => next(err))
 })
 
